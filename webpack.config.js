@@ -7,7 +7,7 @@ const customConfig = {
   entry: './index.js', // Ensure this or another file imports and uses your customized KoiiConstruct
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'your-project-bundle.js',
+    filename: 'koii-task-bundle.js',
   },
   // Other configurations specific to your project
 };
