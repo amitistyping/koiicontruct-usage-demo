@@ -1,0 +1,19 @@
+{
+  "name": "KoiiConstruct Usage Demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-koii-task": "npx webpack --config webpack.config.js --mode development"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koii-contruct": "git+https://github.com/koii-network/task-template.git",
+    "webpack-merge": "^5.10.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  }
+}
