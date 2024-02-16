@@ -1,16 +1,19 @@
 {
-  "name": "KoiiConstruct Usage Demo",
+  "name": "koii-task-creator-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-koii-task": "npx webpack --config webpack.config.js --mode development"
+    "create-koii-task": "npx webpack --config webpack.config.js --mode development"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "koii-contruct": "git+https://github.com/koii-network/task-template.git",
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "debug": "^4.3.4",
+    "koii-task-creator": "https://github.com/koii-network/task-template",
     "webpack-merge": "^5.10.0"
   },
   "devDependencies": {

@@ -1,19 +1,28 @@
-const { audit } = require('koii-contruct/task');
+const { namespaceWrapper, submission, audit } = require('koii-task-creator').creator;
+const { fetchPostTitles, containsAtLeastSixtyPercentOfTitles } = require('./utils');
 
-// Backup the original method if you need to call it inside your custom logic
-const originalValidateNode = audit.validateNode.bind(audit);
-
-// Override the validateNode method with custom logic
-audit.validateNode = async function (submission_value, round) {
-	// Optionally call the original method within your custom logic if you need, just to show how original logic can be used and what it would return
-	const originalValidateNodeResultResult = await originalValidateNode(submission_value, round);
-
-	await myAuditLogic(submission_value, round);
-
-	// Return the result of the original method or modify it as needed
-	return originalValidateNodeResultResult;
+submission.task = async function (round) {
+	const redFlagDealsPostsTitles = await fetchPostTitles();
+	//store on local db
+	await namespaceWrapper.storeSet('postTitles', JSON.stringify(redFlagDealsPostsTitles));
+	console.log('ROUND', round); //if you want to see current round
 };
 
-const myAuditLogic = async (submission_value, round) => {
-	console.log(`Custom audit logic here ${submission_value} ${round}`);
+submission.fetchSubmission = async function (round) {
+	//fetch stored postTitles
+	const storedPostTitles = await namespaceWrapper.storeGet('postTitles');
+	console.log(round);
+	return storedPostTitles;
+};
+
+// Override the validateNode method with custom logic, submission_value is storedPostTitles
+audit.validateNode = async function (submission_value, round) {
+	// Write your logic for the validation of submission value here and return a boolean value in response
+	const storedPostTitles = JSON.parse(submission_value);
+	const postTitles = await fetchPostTitles();
+
+	//returns boolean if 60% of the titles are the same
+	const result = await containsAtLeastSixtyPercentOfTitles(storedPostTitles, postTitles);
+	console.log(round);
+	return result;
 };
